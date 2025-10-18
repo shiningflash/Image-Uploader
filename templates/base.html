@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Image Uploader{% endblock %}</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            max-width: 720px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+            background: #f9fafb;
+        }
+        header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        a {
+            text-decoration: none;
+            color: #2563eb;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        button, input[type=submit] {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover, input[type=submit]:hover {
+            background: #1d4ed8;
+        }
+        .error {
+            color: #dc2626;
+            margin-top: 1rem;
+        }
+        .logout-form {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="/">Image Uploader</a></h1>
+        {% if user.is_authenticated %}
+            <form class="logout-form" method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

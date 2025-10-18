@@ -1,0 +1,19 @@
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.image-card {
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 220px;
+  text-align: center;
+}
+
+.pagination {
+  margin-top: 20px;
+}
+.pagination a {
+  margin: 0 10px;
+}

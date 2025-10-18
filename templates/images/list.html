@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Uploaded Images</h2>
+
+{% if images %}
+  <div class="image-grid">
+    {% for image in images %}
+      <div class="image-card">
+        <a href="{% url 'image_detail' public_id=image.public_id %}">
+          <img src="{{ image.image.url }}" alt="Image {{ forloop.counter }}" width="200" />
+        </a>
+        <p>Uploaded: {{ image.created_at|date:"Y-m-d H:i" }}</p>
+        <p>Uploader IP: {{ image.uploader_ip }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+      {% endif %}
+    </div>
+  {% endif %}
+{% else %}
+  <p>No images uploaded yet.</p>
+{% endif %}
+
+{% endblock %}
