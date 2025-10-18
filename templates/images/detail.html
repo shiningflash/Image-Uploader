@@ -1,15 +1,26 @@
 {% extends "base.html" %}
+
+{% block title %}Image Details{% endblock %}
+
 {% block content %}
 <div class="card">
-  <img src="{{ image.image.url }}" alt="{{ image.public_id }}">
-  <p>Uploaded: {{ image.created_at }}</p>
-  {% if can_delete %}
+  <h2>Image Details</h2>
+
+  <img src="{{ image.image.url }}" alt="Uploaded image {{ image.public_id }}">
+
+  <p><strong>Uploaded:</strong> {{ image.created_at|date:"Y-m-d H:i" }}</p>
+  <p><strong>Uploaded by:</strong> {{ image.user.username }}</p>
+  <p><strong>Public ID:</strong> {{ image.public_id }}</p>
+
+  {% if user == image.user %}
     <form method="post" action="{% url 'image_delete' image.public_id %}">
       {% csrf_token %}
-      <button type="submit">Delete</button>
+      <button type="submit" style="background-color: #dc2626;">Delete Image</button>
     </form>
   {% else %}
     <p><em>Only the uploader can delete this image.</em></p>
   {% endif %}
+
+  <p><a href="{% url 'image_list' %}">← Back to my images</a></p>
 </div>
 {% endblock %}
