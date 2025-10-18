@@ -77,11 +77,15 @@ docker-compose run --rm web python manage.py test images -v 2  # using docker co
 
 ## Endpoints
 
-| Endpoint                     | Method    | Description                                          |
-| ---------------------------- | --------- | ---------------------------------------------------- |
-| `/`                          | GET, POST | Upload an image (max 10 uploads per day per IP)      |
-| `/image/<public_id>/`        | GET       | View the uploaded image and upload date              |
-| `/image/<public_id>/delete/` | POST      | Delete the image (only by original uploader session) |
+| Endpoint                     | Method    | Description                                                               |
+| ---------------------------- | --------- | ------------------------------------------------------------------------- |
+| `/`                          | GET, POST | Upload an image (authenticated users only, max 10 uploads per IP per day) |
+| `/image/<public_id>/`        | GET       | View the uploaded image details (only for logged-in users)                |
+| `/image/<public_id>/delete/` | POST      | Delete the image (only by the authenticated user who uploaded it)         |
+| `/images/`                   | GET       | Paginated list of all images uploaded by the authenticated user           |
+| `/users/login/`              | GET, POST | User login page                                                           |
+| `/users/logout/`             | POST      | Logout the current user                                                   |
+| `/admin/`                    | GET       | Django admin panel                                                        |
 
 ---
 
