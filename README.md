@@ -69,7 +69,7 @@ Then log in to the admin panel at:
 ## Run tests
 
 ```bash
-python manage.py test images -v 2  # locally 
+python manage.py test images -v 2  # locally
 docker-compose run --rm web python manage.py test images -v 2  # using docker compose
 ```
 
@@ -99,10 +99,6 @@ docker-compose run --rm web python manage.py test images -v 2  # using docker co
    * A delete button appears if your session owns the image.
 4. Share `/image/<public_id>/` with anyone — it’s publicly accessible.
 5. Only the original uploader session can delete the image.
-
----
-
-Here’s a clean, professional **“Next Plan”** section you can copy-paste directly into your `README.md` without over-explaining anything:
 
 ---
 
@@ -138,6 +134,3 @@ This project is currently an MVP focused on correctness and clarity.
 * [ ] Multiple file upload: Extend the form to support multiple images at once
 * [ ] Thumbnail preview: Generate a thumbnail for faster display
 * [ ] Monitoring: Use Prometheus + Grafana to track upload counts and quota rejections
-
----
----
