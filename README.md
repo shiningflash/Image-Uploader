@@ -69,7 +69,7 @@ Then log in to the admin panel at:
 ## Run tests
 
 ```bash
-python manage.py test images -v 2  # locally 
+python manage.py test images -v 2  # locally
 docker-compose run --rm web python manage.py test images -v 2  # using docker compose
 ```
 
@@ -77,11 +77,15 @@ docker-compose run --rm web python manage.py test images -v 2  # using docker co
 
 ## Endpoints
 
-| Endpoint                     | Method    | Description                                          |
-| ---------------------------- | --------- | ---------------------------------------------------- |
-| `/`                          | GET, POST | Upload an image (max 10 uploads per day per IP)      |
-| `/image/<public_id>/`        | GET       | View the uploaded image and upload date              |
-| `/image/<public_id>/delete/` | POST      | Delete the image (only by original uploader session) |
+| Endpoint                     | Method    | Description                                                               |
+| ---------------------------- | --------- | ------------------------------------------------------------------------- |
+| `/`                          | GET, POST | Upload an image (authenticated users only, max 10 uploads per IP per day) |
+| `/image/<public_id>/`        | GET       | View the uploaded image details (only for logged-in users)                |
+| `/image/<public_id>/delete/` | POST      | Delete the image (only by the authenticated user who uploaded it)         |
+| `/images/`                   | GET       | Paginated list of all images uploaded by the authenticated user           |
+| `/users/login/`              | GET, POST | User login page                                                           |
+| `/users/logout/`             | POST      | Logout the current user                                                   |
+| `/admin/`                    | GET       | Django admin panel                                                        |
 
 ---
 
@@ -113,10 +117,10 @@ This project is currently an MVP focused on correctness and clarity.
 * ✔️ File Size Limit Middleware (upto 5 MB)
 * ✔️ Log file generation (automatic, log every request) - check `logs/app.log`
 * ✔️ Pagination or listing API: Add an endpoint to list a user’s uploaded images with pagination, making it useful beyond single-file cases
+* ✔️ Use user authentication + ownership field to ensure that only the original uploader can delete the image
 
 ### Planned Improvements
 
-* [ ] Use user authentication + ownership field to ensure that only the original uploader can delete the image
 * [ ] CI/CD setup: GitHub Actions or GitLab CI pipeline for linting, tests, and Docker build
 * [ ] Storage: Move image files to S3 (or any S3-compatible storage like MinIO, DigitalOcean Spaces) using **django-storages** + **boto3**
 * [ ] IP quota tracking: Replace DB queries with Redis and 24h key expiration
@@ -130,5 +134,3 @@ This project is currently an MVP focused on correctness and clarity.
 * [ ] Multiple file upload: Extend the form to support multiple images at once
 * [ ] Thumbnail preview: Generate a thumbnail for faster display
 * [ ] Monitoring: Use Prometheus + Grafana to track upload counts and quota rejections
-
----

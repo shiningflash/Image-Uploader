@@ -1,5 +1,4 @@
-from __future__ import annotations
-
+from django.conf import settings
 from django.db import models
 
 from core.models import PublicIdMixin, TimeStampedModel
@@ -8,12 +7,17 @@ from core.models import PublicIdMixin, TimeStampedModel
 class ImageAsset(PublicIdMixin, TimeStampedModel):
     """
     Minimal, explicit domain model for uploaded images.
-    - public_id: shareable stable ID (from PublicIdMixin)
-    - created_at/updated_at: audit & ordering (from TimeStampedModel)
     """
 
     image = models.ImageField(upload_to="uploads/%Y/%m/%d/")
     uploader_ip = models.GenericIPAddressField()
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="images",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         indexes = [
